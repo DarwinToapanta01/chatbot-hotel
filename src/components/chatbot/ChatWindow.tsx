@@ -31,6 +31,7 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null); // ← nuevo
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -58,7 +59,12 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
     setIsLoading(true);
 
     try {
-      const reply = await sendMessage(content);
+      // Pasa el sessionId para mantener el contexto de conversación
+      const { reply, sessionId: newSessionId } = await sendMessage(content, sessionId);
+
+      // Guarda el sessionId la primera vez
+      if (!sessionId) setSessionId(newSessionId);
+
       const assistantMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -143,7 +149,6 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
           flexShrink: 0,
         }}
       >
-        {/* Avatar */}
         <div
           style={{
             width: '36px',
@@ -231,7 +236,6 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
           </div>
         ))}
 
-        {/* Loading indicator */}
         {isLoading && (
           <div style={{ display: 'flex', alignItems: 'flex-start' }}>
             <div
@@ -253,7 +257,6 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
           </div>
         )}
 
-        {/* Quick actions — solo al inicio */}
         {showQuickActions && !isLoading && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '4px' }}>
             <span style={{ fontSize: '12px', color: '#a1c2c6', letterSpacing: '0.017px' }}>
