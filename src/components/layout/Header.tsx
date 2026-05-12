@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { LoginModal } from '../auth/LoginModal';
+import { RegisterModal } from '../auth/RegisterModal';
 import { useAuth } from '../../context/AuthContext';
 
 export function Header() {
   const { usuario, isAdmin, logout } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   return (
     <>
@@ -26,14 +28,16 @@ export function Header() {
             <a href="#features" className="text-body text-midnight-ink hover:text-oceanic-deep transition-colors">
               Características
             </a>
+            {usuario && !isAdmin && (
+              <Link to="/mis-reservas" className="text-body text-midnight-ink hover:text-oceanic-deep transition-colors font-semibold">
+                Mis Reservas
+              </Link>
+            )}
             {isAdmin && (
               <Link to="/gestion" className="text-body text-midnight-ink hover:text-oceanic-deep transition-colors font-semibold">
                 Ir a Recepción
               </Link>
             )}
-            <a href="#resources" className="text-body text-midnight-ink hover:text-oceanic-deep transition-colors">
-              Recursos
-            </a>
           </nav>
 
           <div className="flex items-center gap-16">
@@ -41,6 +45,11 @@ export function Header() {
               <div className="flex items-center gap-16">
                 <span className="text-caption text-slate-grille hidden sm:block">
                   Hola, <strong className="text-midnight-ink">{usuario.nombre.split(' ')[0]}</strong>
+                  {isAdmin && (
+                    <span className="ml-6 bg-pale-mint text-deep-teal text-[10px] px-6 py-2 rounded-sm font-semibold">
+                      ADMIN
+                    </span>
+                  )}
                 </span>
                 <Button variant="ghost" className="hidden sm:inline-flex" onClick={logout}>
                   Cerrar sesión
@@ -51,8 +60,8 @@ export function Header() {
                 <Button variant="ghost" className="hidden sm:inline-flex" onClick={() => setShowLogin(true)}>
                   Iniciar Sesión
                 </Button>
-                <Button variant="primary" onClick={() => setShowLogin(true)}>
-                  Solicitar Demo
+                <Button variant="primary" onClick={() => setShowRegister(true)}>
+                  Registrarse
                 </Button>
               </>
             )}
@@ -60,7 +69,18 @@ export function Header() {
         </div>
       </header>
 
-      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      {showLogin && (
+        <LoginModal
+          onClose={() => setShowLogin(false)}
+          onSwitchToRegister={() => { setShowLogin(false); setShowRegister(true); }}
+        />
+      )}
+      {showRegister && (
+        <RegisterModal
+          onClose={() => setShowRegister(false)}
+          onSwitchToLogin={() => { setShowRegister(false); setShowLogin(true); }}
+        />
+      )}
     </>
   );
 }

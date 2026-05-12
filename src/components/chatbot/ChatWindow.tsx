@@ -1,6 +1,7 @@
 // src/components/chatbot/ChatWindow.tsx
 import { useState, useRef, useEffect } from 'react';
 import { sendMessage } from '../../services/chatbot';
+import { useAuth } from '../../context/AuthContext';
 
 interface Message {
   id: string;
@@ -21,6 +22,7 @@ interface ChatWindowProps {
 }
 
 export function ChatWindow({ onClose }: ChatWindowProps) {
+  const { token } = useAuth();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
@@ -60,7 +62,7 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
 
     try {
       // Pasa el sessionId para mantener el contexto de conversación
-      const { reply, sessionId: newSessionId } = await sendMessage(content, sessionId);
+      const { reply, sessionId: newSessionId } = await sendMessage(content, sessionId, token);
 
       // Guarda el sessionId la primera vez
       if (!sessionId) setSessionId(newSessionId);
@@ -340,7 +342,7 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
           aria-label="Enviar mensaje"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="#abffae" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="#abffae" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
       </div>

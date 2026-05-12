@@ -1,11 +1,13 @@
-export function MetricsSection() {
-  const metrics = [
-    { value: '+500', label: 'Hoteles Activos' },
-    { value: '2.5M', label: 'Reservas Procesadas' },
-    { value: '99.9%', label: 'Uptime Garantizado' },
-    { value: '24/7', label: 'Soporte Técnico' }
-  ];
+// src/components/home/MetricsSection.tsx
 
+const metrics = [
+  { value: '13', label: 'Habitaciones', sub: 'gestionadas en tiempo real' },
+  { value: '4', label: 'Capas', sub: 'de arquitectura de software' },
+  { value: '24/7', label: 'Disponibilidad', sub: 'del asistente virtual IA' },
+  { value: '100%', label: 'Gratuito', sub: 'sin costo de infraestructura' },
+];
+
+export function MetricsSection() {
   return (
     <section className="w-full py-96 bg-surface-white">
       <div className="max-w-[1200px] mx-auto px-16">
@@ -15,8 +17,11 @@ export function MetricsSection() {
               <div className="text-heading-lg font-bold text-electric-blue tracking-heading-lg">
                 {metric.value}
               </div>
-              <div className="text-body font-medium text-slate-grille uppercase tracking-widest text-xs">
+              <div className="text-body font-semibold text-midnight-ink uppercase tracking-widest text-xs">
                 {metric.label}
+              </div>
+              <div className="text-caption text-slate-grille">
+                {metric.sub}
               </div>
             </div>
           ))}
