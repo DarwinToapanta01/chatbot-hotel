@@ -1,19 +1,23 @@
 // src/services/chatbot.ts
-
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 
-/**
- * Envía un mensaje al backend y retorna la respuesta y sessionId.
- * Pertenece a la Capa de Presentación: solo transporta datos,
- * sin lógica de negocio.
- */
 export async function sendMessage(
   message: string,
-  sessionId?: string | null
+  sessionId?: string | null,
+  token?: string | null
 ): Promise<{ reply: string; sessionId: string }> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  // Si hay token, enviarlo para que el chatbot pueda crear reservas
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const response = await fetch(`${API_URL}/api/chatbot/message`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ message, sessionId }),
   });
 
