@@ -4,6 +4,7 @@ import { Home } from './pages/Home';
 import { Management } from './pages/Management';
 import { MisReservas } from './pages/MisReservas';
 import { ReservasAdmin } from './pages/ReservasAdmin';
+import { ConfiguracionUsuario } from './pages/ConfiguracionUsuario';
 import { ChatWidget } from './components/chatbot/ChatWidget';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
@@ -28,6 +29,7 @@ function AppRoutes() {
         <Route path="/gestion" element={<AdminRoute><Management /></AdminRoute>} />
         <Route path="/reservas" element={<AdminRoute><ReservasAdmin /></AdminRoute>} />
         <Route path="/mis-reservas" element={<PrivateRoute><MisReservas /></PrivateRoute>} />
+        <Route path="/perfil" element={<PrivateRoute><ConfiguracionUsuario /></PrivateRoute>} />
       </Routes>
       <ChatWidget />
     </>

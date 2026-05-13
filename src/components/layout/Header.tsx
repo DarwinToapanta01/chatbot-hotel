@@ -43,14 +43,14 @@ export function Header() {
           <div className="flex items-center gap-16">
             {usuario ? (
               <div className="flex items-center gap-16">
-                <span className="text-caption text-slate-grille hidden sm:block">
+                <Link to="/perfil" className="text-caption text-slate-grille hidden sm:block hover:opacity-80 transition-opacity">
                   Hola, <strong className="text-midnight-ink">{usuario.nombre.split(' ')[0]}</strong>
                   {isAdmin && (
                     <span className="ml-6 bg-pale-mint text-deep-teal text-[10px] px-6 py-2 rounded-sm font-semibold">
                       ADMIN
                     </span>
                   )}
-                </span>
+                </Link>
                 <Button variant="ghost" className="hidden sm:inline-flex" onClick={logout}>
                   Cerrar sesión
                 </Button>

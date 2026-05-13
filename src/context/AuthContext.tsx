@@ -1,11 +1,12 @@
 // src/context/AuthContext.tsx
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
 interface Usuario {
   id: string;
   nombre: string;
   email: string;
   rol: 'CLIENTE' | 'ADMIN';
+  telefono?: string;
 }
 
 interface AuthContextType {
@@ -15,6 +16,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  updateUser: (usuario: Usuario) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -63,6 +65,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('hotelbot_usuario');
   };
 
+  const updateUser = (nuevoUsuario: Usuario) => {
+    setUsuario(nuevoUsuario);
+    localStorage.setItem('hotelbot_usuario', JSON.stringify(nuevoUsuario));
+  };
+
   return (
     <AuthContext.Provider value={{
       usuario,
@@ -71,6 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isLoading,
       login,
       logout,
+      updateUser,
     }}>
       {children}
     </AuthContext.Provider>
