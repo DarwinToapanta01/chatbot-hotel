@@ -81,7 +81,7 @@ export function ConfiguracionUsuario() {
                     </p>
                 </div>
 
-                <div className="bg-surface-white border border-black/10 rounded-sm shadow-subtle overflow-hidden">
+                <div className="bg-surface-white border border-black/10 rounded-sm overflow-hidden">
 
                     <div className="p-32 border-b border-black/5 bg-slate-50/50 flex items-center justify-between">
                         <div className="flex items-center gap-16">

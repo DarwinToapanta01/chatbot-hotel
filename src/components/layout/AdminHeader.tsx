@@ -39,9 +39,9 @@ export function AdminHeader() {
           <div className="flex items-center gap-8">
             {/* Usuario y logout */}
             <div className="flex items-center gap-8">
-              <span className="text-caption text-slate-grille hidden sm:block">
+              <Link to="/perfil" className="text-caption text-slate-grille hidden sm:block hover:opacity-80 transition-opacity">
                 {usuario?.nombre.split(' ')[0]}
-              </span>
+              </Link>
               <button
                 onClick={logout}
                 title="Cerrar sesión"
