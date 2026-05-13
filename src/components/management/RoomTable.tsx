@@ -122,7 +122,7 @@ export function RoomTable({ habitaciones, isLoading, error, onRefresh }: RoomTab
                         </button>
                       )}
 
-                      {(['OCUPADA', 'LIMPIEZA', 'MANTENIMIENTO'] as const).includes(room.estado) && (
+                      {(room.estado === 'OCUPADA' || room.estado === 'LIMPIEZA' || room.estado === 'MANTENIMIENTO') && (
                         <button
                           className="text-slate-500 hover:text-teal-600 p-2 rounded-lg hover:bg-teal-50 transition-colors"
                           title="Marcar Disponible"
@@ -132,7 +132,7 @@ export function RoomTable({ habitaciones, isLoading, error, onRefresh }: RoomTab
                         </button>
                       )}
 
-                      {(['OCUPADA', 'DISPONIBLE'] as const).includes(room.estado) && (
+                      {(room.estado === 'OCUPADA' || room.estado === 'DISPONIBLE') && (
                         <button
                           className="text-slate-500 hover:text-sky-600 p-2 rounded-lg hover:bg-sky-50 transition-colors"
                           title="Marcar Limpieza"
